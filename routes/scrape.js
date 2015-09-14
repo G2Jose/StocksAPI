@@ -18,7 +18,7 @@ router.get('/', function(req, res, next) {
                     request("http://api.fixer.io/latest?base=USD&symbols=CAD", function(e, r, h){
                     conversionRate = JSON.parse(r.body)["rates"]["CAD"];
                     console.log("conversion rate = " + conversionRate);
-                    stockPrice = stockPrice * parseFloat(conversionRate);
+                    stockPrice = (stockPrice * parseFloat(conversionRate)).toString();
                     var stockSymbol = $('a b').first().text()
                     var change = $('td span cite').first().text()
                     var companyName = $('div h3 span').text().replace(' - ', '')
@@ -27,7 +27,7 @@ router.get('/', function(req, res, next) {
                     res.send(json);
                     });
                 }else{
-                    stockPrice = stockPrice * parseFloat(conversionRate);
+                    stockPrice = (stockPrice * parseFloat(conversionRate)).toString;
                     var stockSymbol = $('a b').first().text()
                     var change = $('td span cite').first().text()
                     var companyName = $('div h3 span').text().replace(' - ', '')
