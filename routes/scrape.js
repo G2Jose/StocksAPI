@@ -24,6 +24,7 @@ router.get('/', function(req, res, next) {
                     var companyName = $('div h3 span').text().replace(' - ', '')
                     var lastUpdated = $('table tbody tr td div div table .f,ct-active').first().text()
                     var json = {"query": query, "companyName": companyName, "stockSymbol": stockSymbol, "lastUpdated": lastUpdated, "marketValue": stockPrice, "change": change};
+                    console.log(json);
                     res.send(json);
                     });
                 }else{
@@ -32,6 +33,7 @@ router.get('/', function(req, res, next) {
                     var companyName = $('div h3 span').text().replace(' - ', '')
                     var lastUpdated = $('table tbody tr td div div table .f,ct-active').first().text()
                     var json = {"query": query, "companyName": companyName, "stockSymbol": stockSymbol, "lastUpdated": lastUpdated, "marketValue": stockPrice, "change": change};
+                    console.log(json);
                     res.send(json);
                 }
             }
