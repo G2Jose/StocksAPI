@@ -27,7 +27,6 @@ router.get('/', function(req, res, next) {
                     res.send(json);
                     });
                 }else{
-                    stockPrice = (stockPrice * parseFloat(conversionRate)).toString;
                     var stockSymbol = $('a b').first().text()
                     var change = $('td span cite').first().text()
                     var companyName = $('div h3 span').text().replace(' - ', '')
