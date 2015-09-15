@@ -6,6 +6,7 @@ var cheerio = require('cheerio');
 router.get('/', function(req, res, next) {
 
     if(query = req.query.q){
+        console.log("Received query" + query)
         baseUrl = 'http://www.google.com/search?q=';
         fullUrl = baseUrl.concat(query, '+stock');
         console.log('Attempting to get page at: ' + fullUrl);
@@ -14,7 +15,7 @@ router.get('/', function(req, res, next) {
                 var conversionRate = 1;
                 $ = cheerio.load(html);
                 var stockPrice = $('tbody tr td span b').first().text()
-                if(query.indexOf("NASDAQ")!=-1){
+                if(query.indexOf("NASDAQ")!=-1 || query.indexOf("nasdaq")!=-1  ){
                     request("http://api.fixer.io/latest?base=USD&symbols=CAD", function(e, r, h){
                     conversionRate = JSON.parse(r.body)["rates"]["CAD"];
                     console.log("conversion rate = " + conversionRate);
