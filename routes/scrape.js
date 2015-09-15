@@ -4,13 +4,14 @@ var request = require('request');
 var cheerio = require('cheerio');
 /* GET home page. */
 router.get('/', function(req, res, next) {
-
+    console.log(req.query['q']);
     if(query = req.query.q){
-        console.log("Received query" + query)
+        // console.log("Received query" + query)
         baseUrl = 'http://www.google.com/search?q=';
         fullUrl = baseUrl.concat(query, '+stock');
         console.log('Attempting to get page at: ' + fullUrl);
         request(fullUrl, function(error, response, html){
+            var query = this;
             if(!error){
                 var conversionRate = 1;
                 $ = cheerio.load(html);
@@ -18,14 +19,14 @@ router.get('/', function(req, res, next) {
                 if(query.indexOf("NASDAQ")!=-1 || query.indexOf("nasdaq")!=-1  ){
                     request("http://api.fixer.io/latest?base=USD&symbols=CAD", function(e, r, h){
                     conversionRate = JSON.parse(r.body)["rates"]["CAD"];
-                    console.log("conversion rate = " + conversionRate);
+                    // console.log("conversion rate = " + conversionRate);
                     stockPrice = (stockPrice * parseFloat(conversionRate)).toString();
                     var stockSymbol = $('a b').first().text()
                     var change = $('td span cite').first().text()
                     var companyName = $('div h3 span').text().replace(' - ', '')
                     var lastUpdated = $('table tbody tr td div div table .f,ct-active').first().text()
                     var json = {"query": query, "companyName": companyName, "stockSymbol": stockSymbol, "lastUpdated": lastUpdated, "marketValue": stockPrice, "change": change};
-                    console.log(json);
+                    // console.log(json);
                     res.send(json);
                     });
                 }else{
@@ -34,11 +35,11 @@ router.get('/', function(req, res, next) {
                     var companyName = $('div h3 span').text().replace(' - ', '')
                     var lastUpdated = $('table tbody tr td div div table .f,ct-active').first().text()
                     var json = {"query": query, "companyName": companyName, "stockSymbol": stockSymbol, "lastUpdated": lastUpdated, "marketValue": stockPrice, "change": change};
-                    console.log(json);
+                    // console.log(json);
                     res.send(json);
                 }
             }
-        });
+        }.bind(query));
     }
     else{
         sampleUrl = 'http://www.google.com/search?q=AAPL';

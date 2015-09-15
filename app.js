@@ -12,6 +12,7 @@ var fs = require ('fs');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var scrape = require('./routes/scrape');
+var test = require('./routes/test');
 
 var app = express();
 app.disable('etag');
@@ -31,6 +32,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users', users);
 app.use('/scrape', scrape);
+app.use('/test', test);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
