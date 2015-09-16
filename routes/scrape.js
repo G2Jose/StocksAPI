@@ -34,7 +34,7 @@ router.get('/', function(req, res, next) {
                         s.stockPrice = (s.stockPrice * parseFloat(conversionRate)).toString();
                         var stockSymbol = s.$('a b').first().text();
                         var change = s.$('td span cite').first().text();
-                        s.change = (parseFloat(s.change) * parseFloat(s.conversionRate)).toString();
+                        change = (parseFloat(change) * parseFloat(s.conversionRate)).toString();
                         console.log('Block 1. Query:'.red+query.red+' '+stockSymbol.red+'\tParsed change =\t'+change.red)
                         console.log(s);
                         var companyName = s.$('div h3 span').text().replace(' - ', '');
