@@ -24,7 +24,7 @@ router.get('/', function(req, res, next) {
                         stockPrice: 0, 
                         change: 0
                     }
-
+                    console.log(magicVariable)
                     request("http://api.fixer.io/latest?base=USD&symbols=CAD", function(e, r, h){
                         var s = this;
                         console.log(s);
