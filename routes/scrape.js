@@ -39,7 +39,7 @@ router.get('/', function(req, res, next) {
                         console.log(s);
                         var companyName = s.$('div h3 span').text().replace(' - ', '');
                         var lastUpdated = s.$('table tbody tr td div div table .f,ct-active').first().text();
-                        var json = {"query": s.query, "companyName": companyName, "stockSymbol": stockSymbol, "lastUpdated": lastUpdated, "marketValue": s.stockPrice, "change": s.change};
+                        var json = {"query": s.query, "companyName": companyName, "stockSymbol": stockSymbol, "lastUpdated": lastUpdated, "marketValue": s.stockPrice, "change": change};
                         // console.log(json);
                         res.send(json);
                     }.bind(magicVariable));
