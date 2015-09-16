@@ -21,23 +21,24 @@ router.get('/', function(req, res, next) {
                     var magicVariable = {
                         query: query, 
                         conversionRate: conversionRate,
-                        stockPrice: 0, 
-                        change: 0
+                        stockPrice: stockPrice, 
+                        $: $
                     }
                     // console.log(magicVariable)
                     request("http://api.fixer.io/latest?base=USD&symbols=CAD", function(e, r, h){
                         var s = this;
+
                         console.log(s);
                         s.conversionRate = JSON.parse(r.body)["rates"]["CAD"];
                         // console.log("conversion rate = " + conversionRate);
                         s.stockPrice = (s.stockPrice * parseFloat(conversionRate)).toString();
-                        var stockSymbol = $('a b').first().text();
-                        var change = $('td span cite').first().text();
+                        var stockSymbol = s.$('a b').first().text();
+                        var change = s.$('td span cite').first().text();
                         s.change = (parseFloat(s.change) * parseFloat(s.conversionRate)).toString();
                         console.log('Block 1. Query:'.red+query.red+' '+stockSymbol.red+'\tParsed change =\t'+change.red)
                         console.log(s);
-                        var companyName = $('div h3 span').text().replace(' - ', '');
-                        var lastUpdated = $('table tbody tr td div div table .f,ct-active').first().text();
+                        var companyName = s.$('div h3 span').text().replace(' - ', '');
+                        var lastUpdated = s.$('table tbody tr td div div table .f,ct-active').first().text();
                         var json = {"query": s.query, "companyName": companyName, "stockSymbol": stockSymbol, "lastUpdated": lastUpdated, "marketValue": s.stockPrice, "change": s.change};
                         // console.log(json);
                         res.send(json);
