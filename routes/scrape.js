@@ -10,7 +10,7 @@ router.get('/', function(req, res, next) {
         // console.log("Received query" + query)
         baseUrl = 'http://www.google.com/search?q=';
         fullUrl = baseUrl.concat(query, '+stock');
-        console.log('Attempting to get page at: ' + fullUrl);
+        // console.log('Attempting to get page at: ' + fullUrl);
         request(fullUrl, function(error, response, html){
             var query = this;
             if(!error){
@@ -27,7 +27,7 @@ router.get('/', function(req, res, next) {
                     console.log('change = ' + change)
 
                     change = (parseFloat(change) * parseFloat(conversionRate)).toString();
-                    console.log('Parsed change = '+change)
+                    console.log(stockSymbol+'\tParsed change =\t'+change)
                     var companyName = $('div h3 span').text().replace(' - ', '');
                     var lastUpdated = $('table tbody tr td div div table .f,ct-active').first().text();
                     var json = {"query": query, "companyName": companyName, "stockSymbol": stockSymbol, "lastUpdated": lastUpdated, "marketValue": stockPrice, "change": change};
