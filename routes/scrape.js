@@ -25,7 +25,7 @@ router.get('/', function(req, res, next) {
                     var stockSymbol = $('a b').first().text();
                     var change = $('td span cite').first().text();
                     change = (parseFloat(change) * parseFloat(conversionRate)).toString();
-                    console.log('Block 1. '.red+stockSymbol+'\tParsed change =\t'+change)
+                    console.log('Block 1. '.red+stockSymbol.red+'\tParsed change =\t'+change.red)
                     var companyName = $('div h3 span').text().replace(' - ', '');
                     var lastUpdated = $('table tbody tr td div div table .f,ct-active').first().text();
                     var json = {"query": query, "companyName": companyName, "stockSymbol": stockSymbol, "lastUpdated": lastUpdated, "marketValue": stockPrice, "change": change};
@@ -39,7 +39,7 @@ router.get('/', function(req, res, next) {
                     var companyName = $('div h3 span').text().replace(' - ', '')
                     var lastUpdated = $('table tbody tr td div div table .f,ct-active').first().text()
                     var json = {"query": query, "companyName": companyName, "stockSymbol": stockSymbol, "lastUpdated": lastUpdated, "marketValue": stockPrice, "change": change};
-                    console.log('Block 2. '. yellow+stockSymbol+'\tParsed change =\t'+change)
+                    console.log('Block 2. '. yellow+stockSymbol.yellow+'\tParsed change =\t'+change.yellow)
                     // console.log(json);
                     res.send(json);
                 }
