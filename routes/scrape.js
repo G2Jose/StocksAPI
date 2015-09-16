@@ -24,7 +24,10 @@ router.get('/', function(req, res, next) {
                     stockPrice = (stockPrice * parseFloat(conversionRate)).toString();
                     var stockSymbol = $('a b').first().text();
                     var change = $('td span cite').first().text();
+                    console.log('change = ' + change)
+
                     change = (parseFloat(change) * parseFloat(conversionRate)).toString();
+                    console.log('Parsed change = '+change)
                     var companyName = $('div h3 span').text().replace(' - ', '');
                     var lastUpdated = $('table tbody tr td div div table .f,ct-active').first().text();
                     var json = {"query": query, "companyName": companyName, "stockSymbol": stockSymbol, "lastUpdated": lastUpdated, "marketValue": stockPrice, "change": change};
