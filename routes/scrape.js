@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var request = require('request');
 var cheerio = require('cheerio');
+var colors = require('colors');
 /* GET home page. */
 router.get('/', function(req, res, next) {
 
@@ -24,7 +25,7 @@ router.get('/', function(req, res, next) {
                     var stockSymbol = $('a b').first().text();
                     var change = $('td span cite').first().text();
                     change = (parseFloat(change) * parseFloat(conversionRate)).toString();
-                    console.log('Block 1.'+stockSymbol+'\tParsed change =\t'+change)
+                    console.log('Block 1. '.red+stockSymbol+'\tParsed change =\t'+change)
                     var companyName = $('div h3 span').text().replace(' - ', '');
                     var lastUpdated = $('table tbody tr td div div table .f,ct-active').first().text();
                     var json = {"query": query, "companyName": companyName, "stockSymbol": stockSymbol, "lastUpdated": lastUpdated, "marketValue": stockPrice, "change": change};
@@ -38,7 +39,7 @@ router.get('/', function(req, res, next) {
                     var companyName = $('div h3 span').text().replace(' - ', '')
                     var lastUpdated = $('table tbody tr td div div table .f,ct-active').first().text()
                     var json = {"query": query, "companyName": companyName, "stockSymbol": stockSymbol, "lastUpdated": lastUpdated, "marketValue": stockPrice, "change": change};
-                    console.log('Block 2. '+stockSymbol+'\tParsed change =\t'+change)
+                    console.log('Block 2. '. yello+stockSymbol+'\tParsed change =\t'+change)
                     // console.log(json);
                     res.send(json);
                 }
