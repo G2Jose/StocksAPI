@@ -4,7 +4,6 @@ var request = require('request');
 var cheerio = require('cheerio');
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    console.log(new Date());
 
     if(query = req.query.q){
         // console.log("Received query" + query)
@@ -35,11 +34,10 @@ router.get('/', function(req, res, next) {
                 }else{
                     var stockSymbol = $('a b').first().text()
                     var change = $('td span cite').first().text()
-
+                    change = parseFloat(change).toString();
                     var companyName = $('div h3 span').text().replace(' - ', '')
                     var lastUpdated = $('table tbody tr td div div table .f,ct-active').first().text()
                     var json = {"query": query, "companyName": companyName, "stockSymbol": stockSymbol, "lastUpdated": lastUpdated, "marketValue": stockPrice, "change": change};
-                    console.log('Block 2. Parsing: ' + stockSymbol);
                     console.log('Block 2. '+stockSymbol+'\tParsed change =\t'+change)
                     // console.log(json);
                     res.send(json);
