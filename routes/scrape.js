@@ -31,7 +31,7 @@ router.get('/', function(req, res, next) {
                         console.log(s);
                         s.conversionRate = JSON.parse(r.body)["rates"]["CAD"];
                         // console.log("conversion rate = " + conversionRate);
-                        s.stockPrice = (s.stockPrice * parseFloat(conversionRate)).toString();
+                        s.stockPrice = (s.stockPrice * parseFloat(s.conversionRate)).toString();
                         var stockSymbol = s.$('a b').first().text();
                         var change = s.$('td span cite').first().text();
                         change = (parseFloat(change) * parseFloat(s.conversionRate)).toString();
