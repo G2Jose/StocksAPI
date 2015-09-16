@@ -4,7 +4,8 @@ var request = require('request');
 var cheerio = require('cheerio');
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    console.log(req.query['q']);
+    console.log(new Date());
+
     if(query = req.query.q){
         // console.log("Received query" + query)
         baseUrl = 'http://www.google.com/search?q=';
