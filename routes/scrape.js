@@ -18,20 +18,28 @@ router.get('/', function(req, res, next) {
                 $ = cheerio.load(html);
                 var stockPrice = $('tbody tr td span b').first().text()
                 if(query.indexOf("NASDAQ")!=-1 || query.indexOf("nasdaq")!=-1  ){
+                    var magicVariable = {
+                        query: query, 
+                        conversionRate: conversionRate,
+                        stockPrice: 0, 
+                        change: 0
+                    }
+
                     request("http://api.fixer.io/latest?base=USD&symbols=CAD", function(e, r, h){
-                    conversionRate = JSON.parse(r.body)["rates"]["CAD"];
-                    // console.log("conversion rate = " + conversionRate);
-                    stockPrice = (stockPrice * parseFloat(conversionRate)).toString();
-                    var stockSymbol = $('a b').first().text();
-                    var change = $('td span cite').first().text();
-                    change = (parseFloat(change) * parseFloat(conversionRate)).toString();
-                    console.log('Block 1. Query:'.red+query.red+' '+stockSymbol.red+'\tParsed change =\t'+change.red)
-                    var companyName = $('div h3 span').text().replace(' - ', '');
-                    var lastUpdated = $('table tbody tr td div div table .f,ct-active').first().text();
-                    var json = {"query": query, "companyName": companyName, "stockSymbol": stockSymbol, "lastUpdated": lastUpdated, "marketValue": stockPrice, "change": change};
-                    // console.log(json);
-                    res.send(json);
-                    });
+                        var s = this;
+                        s.conversionRate = JSON.parse(r.body)["rates"]["CAD"];
+                        // console.log("conversion rate = " + conversionRate);
+                        s.stockPrice = (s.stockPrice * parseFloat(conversionRate)).toString();
+                        var stockSymbol = $('a b').first().text();
+                        var change = $('td span cite').first().text();
+                        s.change = (parseFloat(s.change) * parseFloat(s.conversionRate)).toString();
+                        console.log('Block 1. Query:'.red+query.red+' '+stockSymbol.red+'\tParsed change =\t'+change.red)
+                        var companyName = $('div h3 span').text().replace(' - ', '');
+                        var lastUpdated = $('table tbody tr td div div table .f,ct-active').first().text();
+                        var json = {"query": s.query, "companyName": companyName, "stockSymbol": stockSymbol, "lastUpdated": lastUpdated, "marketValue": s.stockPrice, "change": s.change};
+                        // console.log(json);
+                        res.send(json);
+                    }.bind(magicVariable));
                 }else{
                     var stockSymbol = $('a b').first().text()
                     var change = $('td span cite').first().text()
